@@ -1,0 +1,54 @@
+body {
+  font-family: 'Heebo', sans-serif;
+  margin: 0;
+  background: #f5f0eb;
+}
+
+header {
+  background: #1a1410;
+  color: white;
+  padding: 15px;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-area {
+  padding: 10px;
+  background: white;
+  display: flex;
+  gap: 10px;
+}
+
+input, select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.card {
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px;
+  margin-top: 5px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: white;
+}
+
+.wa { background: #25D366; }
+.call { background: #1877F2; }
