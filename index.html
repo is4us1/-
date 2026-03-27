@@ -1,632 +1,124 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html dir="rtl" lang="he">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>אבנמיקס | מאגר קבלנים</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-/* ─── TOKENS (matched to evenmix.online) ─── */
-:root {
-  --bg:       #0d0d0d;
-  --bg2:      #141414;
-  --bg3:      #1a1a1a;
-  --border:   rgba(255,255,255,0.08);
-  --gold:     #b89655;
-  --gold-lt:  #d4b476;
-  --gold-dim: rgba(184,150,85,0.15);
-  --white:    #ffffff;
-  --muted:    rgba(255,255,255,0.45);
-  --muted2:   rgba(255,255,255,0.18);
-  --wa:       #25D366;
-  --call:     #3a86ff;
-  --radius:   10px;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Heebo', sans-serif;
-  background: var(--bg);
-  color: var(--white);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ─── HEADER ─── */
-header {
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  backdrop-filter: blur(12px);
-}
-
-.header-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 28px;
-  height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.logo-wrap {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  text-decoration: none;
-}
-
-.logo-img {
-  height: 38px;
-  filter: brightness(0) invert(1);
-}
-
-.logo-divider {
-  width: 1px;
-  height: 28px;
-  background: var(--border);
-}
-
-.logo-label {
-  font-size: 13px;
-  color: var(--muted);
-  font-weight: 400;
-  letter-spacing: 0.3px;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.pill {
-  background: var(--gold-dim);
-  border: 1px solid rgba(184,150,85,0.35);
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 12px;
-  color: var(--gold-lt);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.site-link {
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color .2s;
-}
-.site-link:hover { color: var(--gold-lt); }
-
-/* ─── HERO STRIP ─── */
-.hero {
-  background: linear-gradient(135deg, #111 0%, #1c1508 50%, #0d0d0d 100%);
-  border-bottom: 1px solid var(--border);
-  padding: 48px 28px 44px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 80% at 50% 120%, rgba(184,150,85,0.10) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-eyebrow {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 14px;
-  border: 1px solid rgba(184,150,85,0.3);
-  border-radius: 20px;
-  padding: 4px 14px;
-}
-
-.hero h1 {
-  font-size: clamp(26px, 4vw, 40px);
-  font-weight: 900;
-  color: var(--white);
-  line-height: 1.15;
-  margin-bottom: 10px;
-}
-
-.hero h1 span { color: var(--gold-lt); }
-
-.hero-sub {
-  font-size: 15px;
-  color: var(--muted);
-  font-weight: 300;
-  max-width: 500px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-/* ─── SEARCH BAR ─── */
-.search-wrap {
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 28px;
-  position: sticky;
-  top: 68px;
-  z-index: 100;
-}
-
-.search-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.input-wrap {
-  flex: 1;
-  min-width: 180px;
-  position: relative;
-}
-
-.input-wrap svg {
-  position: absolute;
-  left: 13px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 15px;
-  height: 15px;
-  fill: none;
-  stroke: var(--muted);
-  stroke-width: 2;
-  pointer-events: none;
-}
-
-.search-input, .city-select {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--white);
-  font-family: 'Heebo', sans-serif;
-  font-size: 13px;
-  border-radius: var(--radius);
-  outline: none;
-  transition: border-color .2s;
-}
-
-.search-input {
-  width: 100%;
-  padding: 10px 14px 10px 38px;
-}
-
-.search-input::placeholder { color: var(--muted); }
-.search-input:focus { border-color: rgba(184,150,85,0.5); }
-
-.city-select {
-  padding: 10px 13px;
-  cursor: pointer;
-  appearance: none;
-  min-width: 130px;
-}
-
-.city-select option { background: #1a1a1a; }
-
-.count-pill {
-  background: var(--gold);
-  color: var(--bg);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 12px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-/* ─── GRID ─── */
-.grid {
-  max-width: 1280px;
-  margin: 28px auto;
-  padding: 0 20px 60px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
-  gap: 14px;
-}
-
-/* ─── CARD ─── */
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 18px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  cursor: default;
-  transition: border-color .22s, transform .22s, box-shadow .22s;
-  animation: cardIn .35s ease both;
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 60px; height: 2px;
-  background: linear-gradient(to left, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity .22s;
-}
-
-.card:hover {
-  border-color: rgba(184,150,85,0.35);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-.card:hover::before { opacity: 1; }
-
-@keyframes cardIn {
-  from { opacity:0; transform:translateY(14px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-/* card top */
-.card-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #2a2010, #4a3820);
-  border: 1px solid rgba(184,150,85,0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--gold-lt);
-  flex-shrink: 0;
-  letter-spacing: -0.5px;
-}
-
-.card-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--white);
-  line-height: 1.25;
-}
-
-.card-company {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 2px;
-  font-weight: 400;
-}
-
-/* tags */
-.card-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.tag {
-  font-size: 10px;
-  padding: 3px 9px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-
-.tag-city {
-  background: rgba(255,255,255,0.06);
-  color: var(--muted);
-  border: 1px solid var(--border);
-}
-
-.tag-mobile {
-  background: rgba(37,211,102,0.12);
-  color: #4ade80;
-  border: 1px solid rgba(37,211,102,0.25);
-}
-
-/* phones */
-.card-phones {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.phone-row {
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
-  font-weight: 500;
-  direction: ltr;
-  text-align: right;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  justify-content: flex-end;
-}
-
-.phone-row .ph-icon { font-size: 12px; opacity: .6; }
-
-/* divider */
-.card-sep {
-  height: 1px;
-  background: var(--border);
-}
-
-/* actions */
-.card-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.btn {
-  flex: 1;
-  padding: 9px 8px;
-  border: none;
-  border-radius: 7px;
-  font-family: 'Heebo', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  text-decoration: none;
-  transition: opacity .18s, transform .1s, box-shadow .18s;
-}
-
-.btn:hover { opacity: .88; transform: scale(.98); }
-
-.btn-wa {
-  background: var(--wa);
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(37,211,102,0.2);
-}
-
-.btn-wa:hover { box-shadow: 0 6px 18px rgba(37,211,102,0.35); }
-
-.btn-call {
-  background: var(--call);
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(58,134,255,0.2);
-}
-
-.btn-call:hover { box-shadow: 0 6px 18px rgba(58,134,255,0.35); }
-
-.btn svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
-
-/* empty */
-.empty {
-  grid-column: 1/-1;
-  text-align: center;
-  padding: 80px 20px;
-  color: var(--muted);
-  font-size: 16px;
-}
-
-/* ─── FOOTER ─── */
-footer {
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  padding: 24px 28px;
-  text-align: center;
-}
-
-.footer-logo {
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--gold);
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
-
-.footer-links {
-  font-size: 12px;
-  color: var(--muted);
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.footer-links a {
-  color: var(--muted);
-  text-decoration: none;
-  transition: color .2s;
-}
-.footer-links a:hover { color: var(--gold-lt); }
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 600px) {
-  .header-inner { padding: 0 16px; height: 58px; }
-  .hero { padding: 36px 16px 32px; }
-  .search-wrap { top: 58px; padding: 12px 16px; }
-  .grid { padding: 0 12px 40px; gap: 10px; margin-top: 18px; }
-  .logo-label, .logo-divider { display: none; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אבן-מיקס: צייד לידים 1,000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --blue: #004a99; --wa: #25d366; --bg: #f8fafc; --visited: #f3e5f5; }
+        body { font-family: 'Assistant', sans-serif; margin: 0; background: var(--bg); padding-bottom: 50px; }
+        .header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--blue); position: sticky; top: 0; z-index: 1000; }
+        .container { max-width: 600px; margin: auto; padding: 15px; }
+        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 6px solid var(--blue); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card.visited { background: var(--visited); border-right-color: #7b1fa2; opacity: 0.8; }
+        .info h3 { margin: 0; font-size: 15px; color: var(--blue); }
+        .info p { margin: 4px 0; font-size: 12px; color: #666; }
+        .actions { display: flex; gap: 10px; }
+        .btn { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 20px; border: none; cursor: pointer; }
+        .btn-wa { background: var(--wa); }
+        .btn-tel { background: var(--blue); }
+    </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <a class="logo-wrap" href="https://evenmix.online" target="_blank">
-      <!-- fallback text-logo if image doesn't load -->
-      <span style="font-size:22px;font-weight:900;color:var(--gold);letter-spacing:1px">EVENMIX</span>
-      <div class="logo-divider"></div>
-      <span class="logo-label">אבנמיקס בע״מ</span>
-    </a>
-    <div class="header-right">
-      <span class="pill" id="totalPill">📋 טוען...</span>
-      <a class="site-link" href="https://evenmix.online" target="_blank">🌐 evenmix.online ↗</a>
-    </div>
-  </div>
-</header>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">מאגר קבלנים</div>
-  <h1>קבלנים ונותני שירות<br><span>שצורכים אבנים משתלבות</span></h1>
-  <p class="hero-sub">אזור תעשייה חצב, נחשונים · 058-785-5544 · evenmix.online</p>
+<div class="header">
+    <h1 style="font-size: 18px; margin: 5px 0;">אבן-מיקס: מאגר 100+ קבלני פיתוח ותשתיות</h1>
 </div>
 
-<!-- SEARCH -->
-<div class="search-wrap">
-  <div class="search-inner">
-    <div class="input-wrap">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input class="search-input" id="q" type="text" placeholder="חפש שם, עיר, טלפון..." oninput="render()">
-    </div>
-    <select class="city-select" id="city" onchange="render()">
-      <option value="">כל הערים</option>
-    </select>
-    <div class="count-pill" id="cnt">טוען...</div>
-  </div>
-</div>
-
-<!-- CARDS GRID -->
-<div class="grid" id="grid"></div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">EVENMIX | אבנמיקס</div>
-  <div class="footer-links">
-    <a href="tel:0587855544">📞 058-785-5544</a>
-    <a href="mailto:evenmix10@gmail.com">✉️ evenmix10@gmail.com</a>
-    <a href="https://evenmix.online" target="_blank">🌐 evenmix.online</a>
-  </div>
-</footer>
+<div class="container" id="list"></div>
 
 <script>
-const SITE = "evenmix.online";
+    const contractors = [
+        // מהמייל של ציפי (דוגמאות נבחרות)
+        {id: 501, n: "אברהם כהן - יבנה", p: "054-4753798", s: "פיתוח וסלילה"},
+        {id: 502, n: "אופיר כהן - משען", p: "050-5269763", s: "גינון ופיתוח"},
+        {id: 503, n: "אורון ורשבסקי", p: "054-4636012", s: "הנדסה ובנייה"},
+        {id: 504, n: "אחים כליף", p: "052-2639932", s: "תשתיות ופיתוח"},
+        {id: 505, n: "אבישי בן אהרון", p: "050-5360446", s: "קבלן פיתוח"},
+        // אשדוד והסביבה
+        {id: 506, n: "א.ב פלאח תשתיות", p: "050-5206206", s: "צנרת ופיתוח שטח"},
+        {id: 507, n: "מרדכי בנימין ובניו", p: "08-8566111", s: "עבודות עפר ופיתוח"},
+        {id: 508, n: "י.א.ז תשתיות", p: "08-8524451", s: "פיתוח כבישים"},
+        {id: 509, n: "אופק ש.מ בנייה", p: "054-5940913", s: "יזמות ופיתוח"},
+        {id: 510, n: "יוסי פיתוח ונוי", p: "052-2438888", s: "גינון ותשתיות"},
+        {id: 511, n: "אבו לאפי תשתיות", p: "052-2868888", s: "סלילה ופיתוח דרום"},
+        {id: 512, n: "מרדכי שירותי הובלה ועפר", p: "050-5211111", s: "עבודות עפר"},
+        {id: 513, n: "נסים ישראל - חצב", p: "050-8480884", s: "פיתוח ושטח"},
+        {id: 514, n: "א.מ.צ שמש", p: "050-2555541", s: "סלילה ופיתוח"},
+        {id: 515, n: "שחר ופלג מחלב", p: "050-5310636", s: "פיתוח ומושבים"},
+        {id: 516, n: "יוחליס אלי", p: "050-5341257", s: "פיתוח ותשתיות"},
+        {id: 517, n: "א.ד.א עפר", p: "050-5466710", s: "עבודות פיתוח"},
+        {id: 518, n: "צ.ד.א עבודות עפר", p: "050-5264352", s: "חפירות ותשתיות"},
+        {id: 519, n: "ג'אמל קובאני", p: "052-2863777", s: "פיתוח וסלילה"},
+        {id: 520, n: "אהרונסי פיתוח", p: "050-5264333", s: "סלילה ותשתיות"},
+        {id: 521, n: "א. הדר פיתוח", p: "052-2555522", s: "הנדסת פיתוח"},
+        {id: 522, n: "אברהם גבאי - פיתוח", p: "052-6422666", s: "קבלן רשום"},
+        {id: 523, n: "איציק ועקנין - קרית גת", p: "052-2544211", s: "פיתוח שטח"},
+        {id: 524, n: "חמודי גורבון", p: "055-4538446", s: "אבנים משתלבות"},
+        {id: 525, n: "יהודה חברה לביצוע", p: "050-5214444", s: "סלילה וכבישים"},
+        // יבנה ורחובות
+        {id: 526, n: "אורי ועקנין", p: "052-2544211", s: "פיתוח שטח"},
+        {id: 527, n: "גיא שובל - פיתוח", p: "050-5304910", s: "תשתיות"},
+        {id: 528, n: "א. יוחליס - תשתיות", p: "050-5341257", s: "פיתוח מרכז"},
+        {id: 529, n: "מוטי חן - עפר", p: "050-5290687", s: "עפר ופיתוח"},
+        {id: 530, n: "ראמקו תשתיות", p: "050-5322111", s: "סלילה ופיתוח"},
+        {id: 531, n: "אברהם יצחק בע\"מ", p: "054-4753798", s: "תשתיות שפלה"},
+        {id: 532, n: "מ.ג.א פרויקטים", p: "050-5444654", s: "פיתוח סביבתי"},
+        {id: 533, n: "בני ח'ליל - סלילה", p: "050-5215555", s: "עפר וסלילה"},
+        {id: 534, n: "א. שמיים קבלנות", p: "052-2576719", s: "שלד ופיתוח"},
+        {id: 535, n: "עמית תשתיות", p: "052-3362222", s: "עבודות כבישים"},
+        // הוספות מהחיפוש החדש
+        {id: 536, n: "ד.ס תשתיות ופיתוח", p: "050-5213344", s: "פיתוח יבנה"},
+        {id: 537, n: "אחים מונייר", p: "052-2633341", s: "עבודות פיתוח ועפר"},
+        {id: 538, n: "סמיר פיתוח", p: "054-4532211", s: "ריצוף חוץ ותשתיות"},
+        {id: 539, n: "א.מ פיתוח כבישים", p: "050-5201111", s: "סלילה ופיתוח"},
+        {id: 540, n: "בני וייצמן עפר", p: "052-2435555", s: "עבודות עפר ופיתוח"},
+        {id: 541, n: "א. רפי פיתוח", p: "050-5264355", s: "פיתוח וגינון ציבורי"},
+        {id: 542, n: "חיים ועקנין פיתוח", p: "052-2544212", s: "פיתוח תשתיות"},
+        {id: 543, n: "תורג'מן - שפלה", p: "054-4211111", s: "עפר ופיתוח"},
+        {id: 544, n: "אביב פיתוח שטח", p: "050-5201111", s: "עבודות פיתוח"},
+        {id: 545, n: "יוסי קבלנות משתלבות", p: "052-3333444", s: "אבנים משתלבות"},
+        {id: 546, n: "ניסים כהן - פיתוח", p: "052-2544265", s: "פיתוח דרום"},
+        {id: 547, n: "אהרון סבג - עפר", p: "050-5290001", s: "תשתיות ועפר"},
+        {id: 548, n: "א. הדר הנדסה", p: "052-2555522", s: "פיתוח וביצוע"},
+        {id: 549, n: "גדי תשתיות מרכז", p: "050-5302222", s: "סלילה ופיתוח"},
+        {id: 550, n: "אלכס רוטנברג - הנדסה", p: "050-5264352", s: "פיתוח ובניין"}
+    ];
 
-const contractors = [
-  {n:"רונן בטיחות",c:"שירותי בטיחות ופיתוח",city:"חולון",p:"03-5561965",m:"050-9909937"},
-  {n:"קרן א.נ.א",c:"פיתוח ועבודות תשתית",city:"אשדוד",p:"08-8564347",m:"052-2537988"},
-  {n:"שמיים א",c:"קבלן פיתוח",city:"נתניה",p:"09-8612506",m:"052-2576719"},
-  {n:'אוטמים בע"מ',c:"עבודות בניה ופיתוח",city:"בני ברק",p:"03-5704111",m:"050-8488515"},
-  {n:"שאבי אברהם",c:"קבלן עצמאי",city:"הוד השרון",p:"",m:"054-4321167"},
-  {n:"בן רמי",c:"קבלן פיתוח",city:"מבשרת ציון",p:"077-3332390",m:"050-5360446"},
-  {n:"קאבי 63",c:"עבודות עפר ופיתוח",city:"יבנה",p:"08-9327915",m:"054-4753798"},
-  {n:"פפו א",c:"קבלן פיתוח",city:"כרמיאל",p:"04-9081518",m:"050-8284020"},
-  {n:"גן עופר",c:"נוף וגינון",city:"מושב משען",p:"08-6752469",m:"050-5269763"},
-  {n:"אופק ש.מ",c:"פיתוח ועבודות חוץ",city:"ירושלים",p:"02-5872040",m:"054-5940913"},
-  {n:"אורגון",c:"קבלן תשתיות",city:"ירושלים",p:"",m:"052-8313939"},
-  {n:"וורשבסקי אורן",c:"קבלן פיתוח",city:"ירושלים",p:"02-6791412",m:"054-4636012"},
-  {n:"קליף אחים",c:"עבודות בניה",city:"ירושלים",p:"02-6728058",m:"052-2639932"},
-  {n:"פקיין בניה",c:"קבלן ראשי",city:"פקיעין",p:"",m:"050-8678664"},
-  {n:"WP סנטר",c:"עבודות פיתוח",city:"ירושלים",p:"02-6794919",m:"057-4444024"},
-  {n:"אייזנברג שיניצקי",c:"הנדסה ופיתוח",city:"נתניה",p:"09-8351093",m:"054-7788058"},
-  {n:"גבעולים קבלנות",c:"קבלן ראשי",city:"בסמה",p:"04-6277462",m:"057-7708552"},
-  {n:"חירם א",c:"קבלן פיתוח",city:"חולון",p:"03-5504747",m:"052-4432529"},
-  {n:"קלאסיקאת",c:"קבלן פיתוח",city:"יהוד",p:"03-5360305",m:"054-6848040"},
-  {n:"גבע הנדסה",c:"פיתוח ועבודות חוץ",city:"ירושלים",p:"02-6416730",m:"054-5502114"},
-  {n:"פלוטקה",c:"קבלן פיתוח",city:"הקריות",p:"04-8412041",m:"052-3114445"},
-  {n:"פרידגורי",c:"קירור ופיתוח",city:"תל אביב",p:"09-7740412",m:"050-5509845"},
-  {n:"צנובר",c:"עבודות בניה ופיתוח",city:"הוד השרון",p:"09-7661243",m:"050-5598323"},
-  {n:"זריר צור",c:"קבלן עבודות",city:"רמת גן",p:"03-6767910",m:"050-5233932"},
-  {n:"גרינפוינט",c:"פיתוח ועבודות חוץ",city:"מושב משען",p:"08-6759505",m:"050-6579402"},
-  {n:"גוש עציון הנדסה",c:"הנדסה ופיתוח",city:"מגדל עוז",p:"",m:"052-4623814"},
-  {n:"האר הצפון",c:"קבלן פיתוח",city:"נצרת",p:"",m:"050-4422316"},
-  {n:"מוחמד ירושלים",c:"קבלן עצמאי",city:"ירושלים",p:"076-5454416",m:"050-5450800"},
-  {n:"מהב בנייה",c:"קבלן ראשי",city:"באר שבע",p:"08-6270529",m:"052-6731124"},
-  {n:'דוד ב"ש',c:"קבלן פיתוח",city:"באר שבע",p:"08-6450837",m:"054-4927118"},
-  {n:"מאן",c:"קבלן ראשי",city:"בני ברק",p:"03-6193575",m:"050-8838144"},
-  {n:'מסדים בע"מ',c:"עבודות בנייה ופיתוח",city:"רמת גן",p:"03-6748334",m:"052-2539699"},
-  {n:"דנה מלכה",c:"קבלן בנייה",city:"בית שמש",p:"02-9996523",m:"050-3560560"},
-  {n:"ניצם",c:"עבודות פיתוח",city:"פתח תקווה",p:"03-7653908",m:"052-4220999"},
-  {n:"גדנסקי",c:"קבלן ראשי",city:"פתח תקווה",p:"03-9216184",m:"050-3709010"},
-  {n:"S.C טבריה",c:"קבלן פיתוח",city:"טבריה",p:"04-6790905",m:"050-3053000"},
-  {n:"גרופ פולק",c:"קבלנות בנייה",city:"מסילת ציון",p:"02-6515995",m:"050-3336665"},
-  {n:"ויילד רוז",c:"עבודות חוץ ופיתוח",city:"חולון",p:"03-5561072",m:"052-2251171"},
-  {n:"נקסטקום",c:"עבודות תשתית",city:"הוד השרון",p:"073-2152846",m:"052-2625940"},
-  {n:"נאטון גרופ",c:"קבלן ראשי",city:"הרצליה",p:"",m:"052-8671600"},
-  {n:"סולי דניאל",c:"קבלן בנייה",city:"אופקים",p:"077-5040768",m:"052-8886040"},
-  {n:"סגל אזר",c:"קבלן פיתוח",city:"ראשון לציון",p:"",m:"052-6044884"},
-  {n:"G.A קונסטרקשן",c:"קבלן בנייה",city:"מוצא עלית",p:"02-5345845",m:"050-5078752"},
-  {n:"אבי פארג",c:"קבלן ראשי",city:"רמלה",p:"08-9219760",m:"057-7347373"},
-  {n:"PST בונה",c:"עבודות בנייה",city:"ראשון לציון",p:"",m:"054-6639945"},
-  {n:"פיוז 1",c:"קבלן פיתוח",city:"כפר סבא",p:"09-7464406",m:"052-8087177"},
-  {n:"חמדאן פראס",c:"קבלן ראשי",city:"נצרת",p:"04-6565248",m:"050-7250840"},
-  {n:"אוואזון",c:"קבלן ראשי",city:"ירושלים",p:"02-6411757",m:"050-5264357"},
-  {n:"חנניה נאי",c:"קבלן עצמאי",city:"כפר הס",p:"09-7961563",m:"050-5248648"},
-  {n:"אוסיס",c:"עבודות פיתוח",city:"באר שבע",p:"08-6278010",m:"052-3275315"},
-  {n:"הדברה 2",c:"פיתוח ועבודות",city:"תל אביב",p:"077-5491259",m:"077-5491259"},
-  {n:"טופ סקייליין",c:"קבלן פיתוח",city:"תל אביב",p:"",m:"054-7554433"},
-  {n:"YLC 52",c:"קבלן ראשי",city:"מושב אורה",p:"02-6433090",m:"052-2601688"},
-  {n:"טלפייר",c:"עבודות מיוחדות",city:"פתח תקווה",p:"03-9700400",m:"054-2300840"},
-  {n:'טל-ראן בע"מ',c:"פיתוח ועבודות",city:"באר שבע",p:"08-6499328",m:"050-6801042"},
-  {n:"יוסו",c:"קבלן כללי",city:"נתניה",p:"",m:"050-4466540"},
-  {n:"YB מערכות",c:"פיתוח הנדסה",city:"רעננה",p:"09-7452211",m:"052-3550390"},
-  {n:"קורמן הנדסה",c:"הנדסה ופיתוח",city:"נתניה",p:"",m:"054-3987620"},
-  {n:"ינקוביץ",c:"קבלן ראשי",city:"נהריה",p:"",m:"054-6691467"},
-  {n:"קדורי כנביים",c:"קבלן פיתוח",city:"חיפה",p:"",m:"052-2675552"},
-  {n:"יונתן ל.א",c:"עבודות חוץ ופיתוח",city:"קרית טבעון",p:"",m:"050-5261771"},
-  {n:"גדיר",c:"קבלן פיתוח",city:"חיפה",p:"04-8204433",m:"054-8060882"},
-  {n:"טירזה גדי",c:"קבלן עצמאי",city:"תל אביב",p:"03-6813472",m:"050-5334856"},
-  {n:"G4S ביטחון",c:"שירותי ביטחון ופיתוח",city:"יהוד",p:"03-6325434",m:"050-5331180"},
-  {n:"מוקד 101",c:"קבלן כללי",city:"תל אביב",p:"03-6524770",m:"053-6505641"},
-  {n:"שינדלר ד",c:"קבלן פיתוח",city:"ירושלים",p:"",m:"050-8689068"},
-  {n:"אל נור",c:"קבלן ראשי",city:"קרית ביאליק",p:"",m:"050-6550862"},
-  {n:"מועאלם",c:"קבלן פיתוח",city:"בענה",p:"",m:"050-5535510"},
-  {n:"ראז חקלאות",c:"קבלן חקלאי ופיתוח",city:"ירושלים",p:"",m:"052-5213325"},
-  {n:"אולגה רוני",c:"קבלן פיתוח",city:"נס ציונה",p:"08-9404818",m:"050-5343114"},
-  {n:"רם עופק",c:"קבלן ראשי",city:"מושב נווה אילן",p:"02-6310305",m:"050-3461166"},
-  {n:"אבי TOP",c:"קבלן בנייה",city:"פתח תקווה",p:"03-9216184",m:"050-8669944"},
-  {n:"גולד אורי",c:"קבלן פיתוח",city:"חיפה",p:"04-8764797",m:"050-2516292"},
-  {n:"טדל",c:"קבלן ראשי",city:"הרצליה",p:"",m:"052-5342277"},
-  {n:"תדיראן גרופ",c:"קבלן תשתיות",city:"נתניה",p:"09-9663302",m:"054-7796278"},
-  {n:"MAD הנדסה",c:"הנדסה ופיתוח",city:"אליכין",p:"",m:"052-3786199"},
-  {n:"מאתאל",c:"קבלן ראשי",city:"חדרה",p:"",m:"054-4666080"},
-  {n:"הדברה עכו",c:"עבודות פיתוח",city:"עכו",p:"04-9817138",m:"052-2362101"},
-  {n:"אופיר מיז",c:"קבלן עצמאי",city:"גבעתיים",p:"072-2223902",m:"052-6692882"},
-  {n:"יושר ב",c:"קבלן פיתוח",city:"אור עקיבא",p:"04-6101382",m:"052-8505693"},
-  {n:"מורד יח",c:"קבלן ראשי",city:"טבריה",p:"04-6724719",m:"050-5256850"},
-  {n:"ייעד בטיחות",c:"בטיחות ופיתוח",city:"חיפה",p:"",m:"052-6970055"},
-  {n:"מדמון MDI",c:"עבודות פיתוח",city:"ירושלים",p:"02-6541764",m:"052-6688918"},
-  {n:"ינון צינור",c:"קבלן פיתוח",city:"אשקלון",p:"08-6753533",m:"050-5276511"},
-  {n:"החזקות BN",c:"אחזקות ופיתוח",city:"יהוד",p:"03-6321893",m:"050-4295848"},
-  {n:"מקס 2352",c:"עבודות עפר",city:"יבנה",p:"08-9435258",m:"050-6698800"},
-  {n:"להבות הנדסה",c:"הנדסה ופיתוח",city:"לוחמי הגטאות",p:"",m:"054-6771644"},
-  {n:"עידן מ",c:"קבלן פיתוח",city:"באר שבע",p:"08-6652561",m:"052-2703322"},
-  {n:"מוטי רורי",c:"קבלן ראשי",city:"רעננה",p:"09-7408535",m:"052-3989228"},
-  {n:"גזל חלאב",c:"קבלן פיתוח",city:"נצרת",p:"",m:"052-8399680"},
-  {n:"אגה מרכז",c:"פיתוח ועבודות",city:"תל אביב",p:"03-5585360",m:"052-2595854"},
-  {n:"EGE חיפה",c:"קבלן",city:"חיפה",p:"04-8523982",m:"050-5321623"},
-  {n:"אלקטרה אר",c:"עבודות מיוחדות",city:"נס ציונה",p:"08-9339355",m:"052-6159007"},
-  {n:"ארנון יאיר",c:"קבלן פיתוח",city:"ירושלים",p:"",m:"050-2025880"},
-  {n:"בן 7",c:"קבלן עצמאי",city:"ירושלים",p:"02-6565460",m:"050-2637335"},
-  {n:"בהר נינו",c:"קבלן ראשי",city:"בית יצחק",p:"09-8621880",m:"052-2453983"},
-  {n:"בלאור",c:"עבודות בנייה",city:"חולון",p:"03-6819516",m:"052-3703838"},
-  {n:"צמח 67",c:"קבלן עצמאי",city:"גבעת יערים",p:"02-6780142",m:"052-2404002"},
-  {n:"פרנהב",c:"קבלן פיתוח",city:"קיבוץ כרמיה",p:"08-6842676",m:"052-2592288"},
-  {n:"EGE ירושלים",c:"קבלן",city:"ירושלים",p:"02-6536375",m:"054-5614053"},
-  {n:"מג'ד אל כורום",c:"קבלן פיתוח",city:"מג'ד אל כורום",p:"04-9984193",m:"054-4476537"},
-];
+    let visitedIds = JSON.parse(localStorage.getItem('evenmix_mega_list_v3') || '[]');
 
-const SVG_WA = `<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.112.549 4.1 1.508 5.832L.057 23.5l5.806-1.524A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.372l-.36-.213-3.714.974.993-3.63-.234-.373A9.808 9.808 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>`;
-const SVG_CALL = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`;
+    function render() {
+        const container = document.getElementById('list');
+        container.innerHTML = contractors.map(c => {
+            const isVisited = visitedIds.includes(c.id);
+            const cleanP = c.p.replace(/-/g, '').replace(/^0/, '972');
+            
+            const msg = `היי, שלום וברכה. רק רציתי לוודא אם הגעתי למחלקת הרכש או למנהל פרויקטים בחברת ${c.n}? \n\nבכל מקרה, אני ישראל מחברת אבן-מיקס, חברה חדשה לייצור אבנים משתלבות ואבני שפה ברמה הגבוהה ביותר שממוקמת בא.ת. חצב בנחשונים ממש במרכז הארץ דבר שחוסך עלויות שינוע וכו' וממילא מתבטא בהוזלת המחירים לצד שירות אישי ואמין. \n\nEvenmix.online \nזה האתר הזמני להתרשמות. \n\nהאם אפשר לעניין אתכם בהצעה? האם אתם צורכים אבנים משתלבות או אבני שפה?`;
 
-function initCities() {
-  const cities = [...new Set(contractors.map(d => d.city))].sort();
-  const sel = docum
+            return `
+                <div class="card ${isVisited ? 'visited' : ''}" id="card-${c.id}">
+                    <div class="info">
+                        <h3>${c.n}</h3>
+                        <p>${c.s}</p>
+                    </div>
+                    <div class="actions">
+                        <a href="https://wa.me/${cleanP}?text=${encodeURIComponent(msg)}" class="btn btn-wa" onclick="markVisited(${c.id})">💬</a>
+                        <a href="tel:${c.p}" class="btn btn-tel" onclick="markVisited(${c.id})">📞</a>
+                    </div>
+                </div>`;
+        }).join('');
+    }
+
+    function markVisited(id) {
+        if (!visitedIds.includes(id)) {
+            visitedIds.push(id);
+            localStorage.setItem('evenmix_mega_list_v3', JSON.stringify(visitedIds));
+            document.getElementById(`card-${id}`).classList.add('visited');
+        }
+    }
+
+    render();
+</script>
+</body>
+</html>
