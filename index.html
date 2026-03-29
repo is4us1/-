@@ -2,105 +2,48 @@
 <html dir="rtl" lang="he">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evenmix | ניהול לידים פרימיום</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Evenmix - כלי ניהול לידים אישי</title>
     <style>
-        :root { --gold: #c5a059; --dark-blue: #002d5a; --wa-green: #25d366; --glass: rgba(255, 255, 255, 0.9); }
-        body { font-family: 'Assistant', sans-serif; margin: 0; background: url('https://images.unsplash.com/photo-1590079019111-ad01176f94d4?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; min-height: 100vh; }
-        body::before { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 45, 90, 0.65); z-index: -1; }
-        .header { background: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .stats-bar { background: var(--gold); color: white; padding: 8px 20px; font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
-        .export-btn { background: var(--dark-blue); color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; border: none; }
-        .container { max-width: 500px; margin: auto; padding: 20px; }
-        .card { background: var(--glass); backdrop-filter: blur(5px); border-radius: 20px; padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-right: 8px solid var(--gold); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-        .card.visited { background: rgba(200, 200, 200, 0.85); border-right-color: #555; }
-        .info h3 { margin: 0; font-size: 17px; color: var(--dark-blue); }
-        .info p { margin: 5px 0 0; font-size: 13px; color: #444; font-weight: 600; }
-        .actions { display: flex; gap: 10px; }
-        .btn { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .btn-wa { background: var(--wa-green); }
-        .btn-tel { background: var(--dark-blue); }
+        body { font-family: sans-serif; background: #f0f0f0; padding: 20px; }
+        .input-box { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        input { padding: 10px; margin: 5px; width: 200px; }
+        .lead-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1 style="margin:0; color:var(--dark-blue);">EVENMIX | ניהול לידים</h1>
+<div class="input-box">
+    <h3>הוסף ליד חדש (שמצאת באתר החברה)</h3>
+    <input type="text" id="name" placeholder="שם החברה">
+    <input type="text" id="phone" placeholder="מספר טלפון (ללא מקפים)">
+    <button onclick="addLead()">הוסף לרשימה</button>
 </div>
 
-<div class="stats-bar">
-    <span id="stats">טוען...</span>
-    <button class="export-btn" onclick="exportData()">ייצוא ל-Excel</button>
-</div>
-
-<div class="container" id="list"></div>
+<div id="list"></div>
 
 <script>
-    const contractors = [
-        {id: 701, n: "אברהם כהן", p: "054-4753798", s: "פיתוח וסלילה"},
-        {id: 702, n: "אופיר כהן", p: "050-5269763", s: "גינון ופיתוח"},
-        {id: 703, n: "אורון ורשבסקי", p: "054-4636012", s: "הנדסה ובנייה"},
-        {id: 704, n: "אחים כליף", p: "052-2639932", s: "תשתיות ופיתוח"},
-        {id: 705, n: "שוקי - אופק בנייה", p: "054-5940913", s: "יזמות ופיתוח"},
-        {id: 706, n: "אבישי בן אהרון", p: "050-5360446", s: "פיתוח שטח"},
-        {id: 707, n: "אברהם גבאי", p: "052-6422666", s: "קבלן רשום"},
-        {id: 708, n: "אריאל באזה", p: "050-6565460", s: "ביצוע פרויקטים"},
-        {id: 709, n: "מוחמד סבאח", p: "050-2450039", s: "עפר וסלילה"},
-        {id: 710, n: "זלמן בראשי", p: "050-5231111", s: "תשתיות ופיתוח"},
-        {id: 711, n: "חמודי גורבון", p: "055-4538446", s: "אבנים משתלבות"},
-        {id: 712, n: "ראמקו תשתיות", p: "050-5322111", s: "סלילה וכבישים"},
-        {id: 713, n: "בני ח'ליל", p: "050-5215555", s: "עפר וסלילה"},
-        {id: 714, n: "מרדכי בנימין", p: "08-8566111", s: "פיתוח אשדוד"},
-        {id: 715, n: "אבו לאפי", p: "052-2868888", s: "סלילה ופיתוח"},
-        {id: 716, n: "שחר ופלג מחלב", p: "050-5310636", s: "פיתוח מושבים"},
-        {id: 717, n: "חיים ועקנין", p: "052-2544212", s: "פיתוח תשתיות"},
-        {id: 718, n: "א.ב פלאח", p: "050-5206206", s: "צנרת ופיתוח"},
-        {id: 719, n: "יוסי פיתוח ונוי", p: "052-2438888", s: "גינון ותשתיות"},
-        {id: 720, n: "נסים ישראל", p: "050-8480884", s: "פיתוח חצב"},
-        {id: 721, n: "ד.ס תשתיות", p: "050-5213344", s: "פיתוח יבנה"},
-        {id: 722, n: "אחים מונייר", p: "052-2633341", s: "עבודות פיתוח"},
-        {id: 723, n: "סמיר פיתוח", p: "054-4532211", s: "ריצוף חוץ"},
-        {id: 724, n: "א.מ פיתוח כבישים", p: "050-5201111", s: "סלילה"},
-        {id: 725, n: "בני וייצמן", p: "052-2435555", s: "עפר ופיתוח"}
-    ];
+    let leads = JSON.parse(localStorage.getItem('evenmix_leads') || '[]');
 
-    let visitedIds = JSON.parse(localStorage.getItem('evenmix_final_list') || '[]');
-
-    function render() {
-        const container = document.getElementById('list');
-        document.getElementById('stats').innerText = `בוצעו: ${visitedIds.length} מ-${contractors.length}`;
-        container.innerHTML = contractors.map(c => `
-            <div class="card ${visitedIds.includes(c.id) ? 'visited' : ''}" id="card-${c.id}">
-                <div class="info"><h3>${c.n}</h3><p>${c.s}</p></div>
-                <div class="actions">
-                    <a href="https://wa.me/${c.p.replace(/-/g, '').replace(/^0/, '972')}?text=היי, שלום וברכה. מדובר בהצעה מחברת אבן-מיקס..." class="btn btn-wa" onclick="markVisited(${c.id})">💬</a>
-                    <a href="tel:${c.p}" class="btn btn-tel" onclick="markVisited(${c.id})">📞</a>
-                </div>
-            </div>`).join('');
-    }
-
-    function markVisited(id) {
-        if (!visitedIds.includes(id)) {
-            visitedIds.push(id);
-            localStorage.setItem('evenmix_final_list', JSON.stringify(visitedIds));
+    function addLead() {
+        const n = document.getElementById('name').value;
+        const p = document.getElementById('phone').value;
+        if(n && p) {
+            leads.push({id: Date.now(), n, p});
+            localStorage.setItem('evenmix_leads', JSON.stringify(leads));
             render();
         }
     }
 
-    function exportData() {
-        let csv = "Name,Phone,Service\n";
-        contractors.filter(c => visitedIds.includes(c.id)).forEach(c => {
-            csv += `${c.n},${c.p},${c.s}\n`;
-        });
-        const blob = new Blob([csv], {type: 'text/csv'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'evenmix_leads.csv';
-        a.click();
+    function render() {
+        document.getElementById('list').innerHTML = leads.map(l => `
+            <div class="lead-card">
+                <div><strong>${l.n}</strong><br>${l.p}</div>
+                <div>
+                    <a href="https://wa.me/972${l.p.replace(/^0/, '')}">💬 ווטסאפ</a> | 
+                    <a href="tel:${l.p}">📞 חיוג</a>
+                </div>
+            </div>`).join('');
     }
-
     render();
 </script>
 </body>
