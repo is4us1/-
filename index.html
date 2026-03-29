@@ -1,50 +1,142 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="he">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Evenmix - כלי ניהול לידים אישי</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>רשימת קבלני תשתיות - 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; background: #f0f0f0; padding: 20px; }
-        .input-box { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        input { padding: 10px; margin: 5px; width: 200px; }
-        .lead-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        body { font-family: 'Assistant', sans-serif; }
+        .phone-btn { transition: all 0.2s; }
+        .phone-btn:hover { transform: scale(1.05); }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 p-2 md:p-8">
 
-<div class="input-box">
-    <h3>הוסף ליד חדש (שמצאת באתר החברה)</h3>
-    <input type="text" id="name" placeholder="שם החברה">
-    <input type="text" id="phone" placeholder="מספר טלפון (ללא מקפים)">
-    <button onclick="addLead()">הוסף לרשימה</button>
-</div>
+    <div class="max-w-5xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden">
+        <header class="bg-blue-900 text-white p-6 text-center">
+            <h1 class="text-2xl md:text-4xl font-bold">מדריך קבלני תשתיות ופיתוח</h1>
+            <p class="mt-2 opacity-80">רשימת טלפונים מאומתת לחיוג ישיר</p>
+        </header>
 
-<div id="list"></div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-right border-collapse">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-700 uppercase text-sm">
+                        <th class="p-4 border-b">שם החברה</th>
+                        <th class="p-4 border-b">אזור / עיר</th>
+                        <th class="p-4 border-b text-center">חיוג ישיר</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <!-- קבלנים עם מספרים -->
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">אהרונסי הנדסה ותשתיות</td>
+                        <td class="p-4 text-gray-600">חדרה / מרכז</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:046326956" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">04-6326956</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">עוז עבודות עפר</td>
+                        <td class="p-4 text-gray-600">צפון / אחיהוד</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:0525921688" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">052-5921688</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">דניה סיבוס</td>
+                        <td class="p-4 text-gray-600">ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:036340341" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">03-6340341</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">אל-טרנס עבודות תשתית</td>
+                        <td class="p-4 text-gray-600">יהוד / מרכז</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:035332341" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">03-5332341</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">אחים מלק תשתיות</td>
+                        <td class="p-4 text-gray-600">ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:0768612968" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">076-8612968</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">ס. אמי מהנדסים</td>
+                        <td class="p-4 text-gray-600">צפון / שפרעם</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:049869713" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">04-9869713</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">סאלח עדנאן תשתיות</td>
+                        <td class="p-4 text-gray-600">ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:0768621512" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">076-8621512</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">מנורה איזו אהרון</td>
+                        <td class="p-4 text-gray-600">ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:039279700" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">03-9279700</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">קבוצת אורון</td>
+                        <td class="p-4 text-gray-600">דרום / ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:086208000" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">08-6208000</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">חמו אהרון בע"מ</td>
+                        <td class="p-4 text-gray-600">ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:036891000" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">03-6891000</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">תעבורה אחזקות</td>
+                        <td class="p-4 text-gray-600">רמלה / ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:089270420" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">08-9270420</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">גו-פנדה איתור תשתיות</td>
+                        <td class="p-4 text-gray-600">ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:0533413252" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">053-3413252</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">שמעון חואטו ובניו</td>
+                        <td class="p-4 text-gray-600">דרום / שדרות</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:086898553" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">08-6898553</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold text-blue-900">א. בראשי תשתיות</td>
+                        <td class="p-4 text-gray-600">ירושלים / ארצי</td>
+                        <td class="p-4 text-center">
+                            <a href="tel:025833444" class="phone-btn inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-bold">02-5833444</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <footer class="p-6 bg-gray-50 text-center text-gray-500 text-sm">
+            ניתן להוסיף קבלנים נוספים דרך עריכת קובץ ה-HTML.
+        </footer>
+    </div>
 
-<script>
-    let leads = JSON.parse(localStorage.getItem('evenmix_leads') || '[]');
-
-    function addLead() {
-        const n = document.getElementById('name').value;
-        const p = document.getElementById('phone').value;
-        if(n && p) {
-            leads.push({id: Date.now(), n, p});
-            localStorage.setItem('evenmix_leads', JSON.stringify(leads));
-            render();
-        }
-    }
-
-    function render() {
-        document.getElementById('list').innerHTML = leads.map(l => `
-            <div class="lead-card">
-                <div><strong>${l.n}</strong><br>${l.p}</div>
-                <div>
-                    <a href="https://wa.me/972${l.p.replace(/^0/, '')}">💬 ווטסאפ</a> | 
-                    <a href="tel:${l.p}">📞 חיוג</a>
-                </div>
-            </div>`).join('');
-    }
-    render();
-</script>
 </body>
 </html>
