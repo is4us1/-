@@ -3,119 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>אבן-מיקס: צייד לידים 1,000</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <title>Evenmix | ניהול לידים פרימיום</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --blue: #004a99; --wa: #25d366; --bg: #f8fafc; --visited: #f3e5f5; }
-        body { font-family: 'Assistant', sans-serif; margin: 0; background: var(--bg); padding-bottom: 50px; }
-        .header { background: white; padding: 15px; text-align: center; border-bottom: 3px solid var(--blue); position: sticky; top: 0; z-index: 1000; }
-        .container { max-width: 600px; margin: auto; padding: 15px; }
-        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 6px solid var(--blue); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .card.visited { background: var(--visited); border-right-color: #7b1fa2; opacity: 0.8; }
-        .info h3 { margin: 0; font-size: 15px; color: var(--blue); }
-        .info p { margin: 4px 0; font-size: 12px; color: #666; }
+        :root { --gold: #c5a059; --dark-blue: #002d5a; --wa-green: #25d366; --glass: rgba(255, 255, 255, 0.9); }
+        body { font-family: 'Assistant', sans-serif; margin: 0; background: url('https://images.unsplash.com/photo-1590079019111-ad01176f94d4?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; min-height: 100vh; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 45, 90, 0.65); z-index: -1; }
+        .header { background: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .stats-bar { background: var(--gold); color: white; padding: 8px 20px; font-size: 13px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .export-btn { background: var(--dark-blue); color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; border: none; }
+        .container { max-width: 500px; margin: auto; padding: 20px; }
+        .card { background: var(--glass); backdrop-filter: blur(5px); border-radius: 20px; padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-right: 8px solid var(--gold); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .card.visited { background: rgba(200, 200, 200, 0.85); border-right-color: #555; }
+        .info h3 { margin: 0; font-size: 17px; color: var(--dark-blue); }
+        .info p { margin: 5px 0 0; font-size: 13px; color: #444; font-weight: 600; }
         .actions { display: flex; gap: 10px; }
-        .btn { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 20px; border: none; cursor: pointer; }
-        .btn-wa { background: var(--wa); }
-        .btn-tel { background: var(--blue); }
+        .btn { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 22px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .btn-wa { background: var(--wa-green); }
+        .btn-tel { background: var(--dark-blue); }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1 style="font-size: 18px; margin: 5px 0;">אבן-מיקס: מאגר 100+ קבלני פיתוח ותשתיות</h1>
+    <h1 style="margin:0; color:var(--dark-blue);">EVENMIX | ניהול לידים</h1>
+</div>
+
+<div class="stats-bar">
+    <span id="stats">טוען...</span>
+    <button class="export-btn" onclick="exportData()">ייצוא ל-Excel</button>
 </div>
 
 <div class="container" id="list"></div>
 
 <script>
     const contractors = [
-        // מהמייל של ציפי (דוגמאות נבחרות)
-        {id: 501, n: "אברהם כהן - יבנה", p: "054-4753798", s: "פיתוח וסלילה"},
-        {id: 502, n: "אופיר כהן - משען", p: "050-5269763", s: "גינון ופיתוח"},
-        {id: 503, n: "אורון ורשבסקי", p: "054-4636012", s: "הנדסה ובנייה"},
-        {id: 504, n: "אחים כליף", p: "052-2639932", s: "תשתיות ופיתוח"},
-        {id: 505, n: "אבישי בן אהרון", p: "050-5360446", s: "קבלן פיתוח"},
-        // אשדוד והסביבה
-        {id: 506, n: "א.ב פלאח תשתיות", p: "050-5206206", s: "צנרת ופיתוח שטח"},
-        {id: 507, n: "מרדכי בנימין ובניו", p: "08-8566111", s: "עבודות עפר ופיתוח"},
-        {id: 508, n: "י.א.ז תשתיות", p: "08-8524451", s: "פיתוח כבישים"},
-        {id: 509, n: "אופק ש.מ בנייה", p: "054-5940913", s: "יזמות ופיתוח"},
-        {id: 510, n: "יוסי פיתוח ונוי", p: "052-2438888", s: "גינון ותשתיות"},
-        {id: 511, n: "אבו לאפי תשתיות", p: "052-2868888", s: "סלילה ופיתוח דרום"},
-        {id: 512, n: "מרדכי שירותי הובלה ועפר", p: "050-5211111", s: "עבודות עפר"},
-        {id: 513, n: "נסים ישראל - חצב", p: "050-8480884", s: "פיתוח ושטח"},
-        {id: 514, n: "א.מ.צ שמש", p: "050-2555541", s: "סלילה ופיתוח"},
-        {id: 515, n: "שחר ופלג מחלב", p: "050-5310636", s: "פיתוח ומושבים"},
-        {id: 516, n: "יוחליס אלי", p: "050-5341257", s: "פיתוח ותשתיות"},
-        {id: 517, n: "א.ד.א עפר", p: "050-5466710", s: "עבודות פיתוח"},
-        {id: 518, n: "צ.ד.א עבודות עפר", p: "050-5264352", s: "חפירות ותשתיות"},
-        {id: 519, n: "ג'אמל קובאני", p: "052-2863777", s: "פיתוח וסלילה"},
-        {id: 520, n: "אהרונסי פיתוח", p: "050-5264333", s: "סלילה ותשתיות"},
-        {id: 521, n: "א. הדר פיתוח", p: "052-2555522", s: "הנדסת פיתוח"},
-        {id: 522, n: "אברהם גבאי - פיתוח", p: "052-6422666", s: "קבלן רשום"},
-        {id: 523, n: "איציק ועקנין - קרית גת", p: "052-2544211", s: "פיתוח שטח"},
-        {id: 524, n: "חמודי גורבון", p: "055-4538446", s: "אבנים משתלבות"},
-        {id: 525, n: "יהודה חברה לביצוע", p: "050-5214444", s: "סלילה וכבישים"},
-        // יבנה ורחובות
-        {id: 526, n: "אורי ועקנין", p: "052-2544211", s: "פיתוח שטח"},
-        {id: 527, n: "גיא שובל - פיתוח", p: "050-5304910", s: "תשתיות"},
-        {id: 528, n: "א. יוחליס - תשתיות", p: "050-5341257", s: "פיתוח מרכז"},
-        {id: 529, n: "מוטי חן - עפר", p: "050-5290687", s: "עפר ופיתוח"},
-        {id: 530, n: "ראמקו תשתיות", p: "050-5322111", s: "סלילה ופיתוח"},
-        {id: 531, n: "אברהם יצחק בע\"מ", p: "054-4753798", s: "תשתיות שפלה"},
-        {id: 532, n: "מ.ג.א פרויקטים", p: "050-5444654", s: "פיתוח סביבתי"},
-        {id: 533, n: "בני ח'ליל - סלילה", p: "050-5215555", s: "עפר וסלילה"},
-        {id: 534, n: "א. שמיים קבלנות", p: "052-2576719", s: "שלד ופיתוח"},
-        {id: 535, n: "עמית תשתיות", p: "052-3362222", s: "עבודות כבישים"},
-        // הוספות מהחיפוש החדש
-        {id: 536, n: "ד.ס תשתיות ופיתוח", p: "050-5213344", s: "פיתוח יבנה"},
-        {id: 537, n: "אחים מונייר", p: "052-2633341", s: "עבודות פיתוח ועפר"},
-        {id: 538, n: "סמיר פיתוח", p: "054-4532211", s: "ריצוף חוץ ותשתיות"},
-        {id: 539, n: "א.מ פיתוח כבישים", p: "050-5201111", s: "סלילה ופיתוח"},
-        {id: 540, n: "בני וייצמן עפר", p: "052-2435555", s: "עבודות עפר ופיתוח"},
-        {id: 541, n: "א. רפי פיתוח", p: "050-5264355", s: "פיתוח וגינון ציבורי"},
-        {id: 542, n: "חיים ועקנין פיתוח", p: "052-2544212", s: "פיתוח תשתיות"},
-        {id: 543, n: "תורג'מן - שפלה", p: "054-4211111", s: "עפר ופיתוח"},
-        {id: 544, n: "אביב פיתוח שטח", p: "050-5201111", s: "עבודות פיתוח"},
-        {id: 545, n: "יוסי קבלנות משתלבות", p: "052-3333444", s: "אבנים משתלבות"},
-        {id: 546, n: "ניסים כהן - פיתוח", p: "052-2544265", s: "פיתוח דרום"},
-        {id: 547, n: "אהרון סבג - עפר", p: "050-5290001", s: "תשתיות ועפר"},
-        {id: 548, n: "א. הדר הנדסה", p: "052-2555522", s: "פיתוח וביצוע"},
-        {id: 549, n: "גדי תשתיות מרכז", p: "050-5302222", s: "סלילה ופיתוח"},
-        {id: 550, n: "אלכס רוטנברג - הנדסה", p: "050-5264352", s: "פיתוח ובניין"}
+        {id: 701, n: "אברהם כהן", p: "054-4753798", s: "פיתוח וסלילה"},
+        {id: 702, n: "אופיר כהן", p: "050-5269763", s: "גינון ופיתוח"},
+        {id: 703, n: "אורון ורשבסקי", p: "054-4636012", s: "הנדסה ובנייה"},
+        {id: 704, n: "אחים כליף", p: "052-2639932", s: "תשתיות ופיתוח"},
+        {id: 705, n: "שוקי - אופק בנייה", p: "054-5940913", s: "יזמות ופיתוח"},
+        {id: 706, n: "אבישי בן אהרון", p: "050-5360446", s: "פיתוח שטח"},
+        {id: 707, n: "אברהם גבאי", p: "052-6422666", s: "קבלן רשום"},
+        {id: 708, n: "אריאל באזה", p: "050-6565460", s: "ביצוע פרויקטים"},
+        {id: 709, n: "מוחמד סבאח", p: "050-2450039", s: "עפר וסלילה"},
+        {id: 710, n: "זלמן בראשי", p: "050-5231111", s: "תשתיות ופיתוח"},
+        {id: 711, n: "חמודי גורבון", p: "055-4538446", s: "אבנים משתלבות"},
+        {id: 712, n: "ראמקו תשתיות", p: "050-5322111", s: "סלילה וכבישים"},
+        {id: 713, n: "בני ח'ליל", p: "050-5215555", s: "עפר וסלילה"},
+        {id: 714, n: "מרדכי בנימין", p: "08-8566111", s: "פיתוח אשדוד"},
+        {id: 715, n: "אבו לאפי", p: "052-2868888", s: "סלילה ופיתוח"},
+        {id: 716, n: "שחר ופלג מחלב", p: "050-5310636", s: "פיתוח מושבים"},
+        {id: 717, n: "חיים ועקנין", p: "052-2544212", s: "פיתוח תשתיות"},
+        {id: 718, n: "א.ב פלאח", p: "050-5206206", s: "צנרת ופיתוח"},
+        {id: 719, n: "יוסי פיתוח ונוי", p: "052-2438888", s: "גינון ותשתיות"},
+        {id: 720, n: "נסים ישראל", p: "050-8480884", s: "פיתוח חצב"},
+        {id: 721, n: "ד.ס תשתיות", p: "050-5213344", s: "פיתוח יבנה"},
+        {id: 722, n: "אחים מונייר", p: "052-2633341", s: "עבודות פיתוח"},
+        {id: 723, n: "סמיר פיתוח", p: "054-4532211", s: "ריצוף חוץ"},
+        {id: 724, n: "א.מ פיתוח כבישים", p: "050-5201111", s: "סלילה"},
+        {id: 725, n: "בני וייצמן", p: "052-2435555", s: "עפר ופיתוח"}
     ];
 
-    let visitedIds = JSON.parse(localStorage.getItem('evenmix_mega_list_v3') || '[]');
+    let visitedIds = JSON.parse(localStorage.getItem('evenmix_final_list') || '[]');
 
     function render() {
         const container = document.getElementById('list');
-        container.innerHTML = contractors.map(c => {
-            const isVisited = visitedIds.includes(c.id);
-            const cleanP = c.p.replace(/-/g, '').replace(/^0/, '972');
-            
-            const msg = `היי, שלום וברכה. רק רציתי לוודא אם הגעתי למחלקת הרכש או למנהל פרויקטים בחברת ${c.n}? \n\nבכל מקרה, אני ישראל מחברת אבן-מיקס, חברה חדשה לייצור אבנים משתלבות ואבני שפה ברמה הגבוהה ביותר שממוקמת בא.ת. חצב בנחשונים ממש במרכז הארץ דבר שחוסך עלויות שינוע וכו' וממילא מתבטא בהוזלת המחירים לצד שירות אישי ואמין. \n\nEvenmix.online \nזה האתר הזמני להתרשמות. \n\nהאם אפשר לעניין אתכם בהצעה? האם אתם צורכים אבנים משתלבות או אבני שפה?`;
-
-            return `
-                <div class="card ${isVisited ? 'visited' : ''}" id="card-${c.id}">
-                    <div class="info">
-                        <h3>${c.n}</h3>
-                        <p>${c.s}</p>
-                    </div>
-                    <div class="actions">
-                        <a href="https://wa.me/${cleanP}?text=${encodeURIComponent(msg)}" class="btn btn-wa" onclick="markVisited(${c.id})">💬</a>
-                        <a href="tel:${c.p}" class="btn btn-tel" onclick="markVisited(${c.id})">📞</a>
-                    </div>
-                </div>`;
-        }).join('');
+        document.getElementById('stats').innerText = `בוצעו: ${visitedIds.length} מ-${contractors.length}`;
+        container.innerHTML = contractors.map(c => `
+            <div class="card ${visitedIds.includes(c.id) ? 'visited' : ''}" id="card-${c.id}">
+                <div class="info"><h3>${c.n}</h3><p>${c.s}</p></div>
+                <div class="actions">
+                    <a href="https://wa.me/${c.p.replace(/-/g, '').replace(/^0/, '972')}?text=היי, שלום וברכה. מדובר בהצעה מחברת אבן-מיקס..." class="btn btn-wa" onclick="markVisited(${c.id})">💬</a>
+                    <a href="tel:${c.p}" class="btn btn-tel" onclick="markVisited(${c.id})">📞</a>
+                </div>
+            </div>`).join('');
     }
 
     function markVisited(id) {
         if (!visitedIds.includes(id)) {
             visitedIds.push(id);
-            localStorage.setItem('evenmix_mega_list_v3', JSON.stringify(visitedIds));
-            document.getElementById(`card-${id}`).classList.add('visited');
+            localStorage.setItem('evenmix_final_list', JSON.stringify(visitedIds));
+            render();
         }
+    }
+
+    function exportData() {
+        let csv = "Name,Phone,Service\n";
+        contractors.filter(c => visitedIds.includes(c.id)).forEach(c => {
+            csv += `${c.n},${c.p},${c.s}\n`;
+        });
+        const blob = new Blob([csv], {type: 'text/csv'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'evenmix_leads.csv';
+        a.click();
     }
 
     render();
